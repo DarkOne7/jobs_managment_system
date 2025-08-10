@@ -1,0 +1,235 @@
+/* Admin Styles for Job System */
+
+.color-picker {
+    width: 100px;
+}
+
+.job-system-admin {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Department selection dropdown */
+#job_department {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 14px;
+}
+
+#job_department option {
+    padding: 5px;
+}
+
+/* Department color display in admin columns */
+.job-department-color-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 2px;
+}
+
+/* Job meta box styling */
+.job-details-meta-box .form-table th {
+    width: 150px;
+    padding: 15px 10px 15px 0;
+    vertical-align: top;
+}
+
+.job-details-meta-box .form-table td {
+    padding: 15px 0;
+}
+
+.job-details-meta-box .regular-text {
+    width: 100%;
+    max-width: 400px;
+}
+
+.job-details-meta-box .description {
+    font-style: italic;
+    color: #666;
+    margin-top: 5px;
+}
+
+.job-details-meta-box .description a {
+    color: #0073aa;
+    text-decoration: none;
+}
+
+.job-details-meta-box .description a:hover {
+    text-decoration: underline;
+}
+
+/* Department selection visual feedback */
+#job_department.no-department-selected {
+    border-color: #dc3232;
+    box-shadow: 0 0 2px rgba(220, 50, 50, 0.3);
+}
+
+#job_department:focus {
+    border-color: #0073aa;
+    box-shadow: 0 0 0 1px #0073aa;
+    outline: none;
+}
+
+/* Job applications table styling */
+.job-applications-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.job-applications-table th,
+.job-applications-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.job-applications-table th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+}
+
+.job-applications-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Status dropdown styling */
+.application-status {
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    background-color: white;
+}
+
+.application-status option[value="pending"] {
+    background-color: #fff3cd;
+}
+
+.application-status option[value="reviewed"] {
+    background-color: #d1ecf1;
+}
+
+.application-status option[value="accepted"] {
+    background-color: #d4edda;
+}
+
+.application-status option[value="rejected"] {
+    background-color: #f8d7da;
+}
+
+/* Job filter dropdown */
+.job-application-search {
+    margin-bottom: 20px;
+}
+
+.job-application-search select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    min-width: 200px;
+}
+
+/* Meta box styling */
+.job-details-meta-box .form-table th {
+    width: 150px;
+    padding: 15px 10px 15px 0;
+}
+
+.job-details-meta-box .form-table td {
+    padding: 15px 0;
+}
+
+.job-details-meta-box .regular-text {
+    width: 100%;
+    max-width: 400px;
+}
+
+.job-details-meta-box .description {
+    font-style: italic;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Dashboard widgets styling */
+.job-system-dashboard-widget {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.job-system-stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.job-system-stat {
+    background: #f1f1f1;
+    padding: 15px;
+    border-radius: 4px;
+    text-align: center;
+    min-width: 120px;
+}
+
+.job-system-stat .number {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0073aa;
+}
+
+.job-system-stat .label {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Notice styling */
+.job-system-notice {
+    background: #fff;
+    border-left: 4px solid #0073aa;
+    padding: 12px;
+    margin: 15px 0;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+}
+
+.job-system-notice.error {
+    border-left-color: #dc3232;
+}
+
+.job-system-notice.success {
+    border-left-color: #46b450;
+}
+
+.job-system-notice.warning {
+    border-left-color: #ffb900;
+}
+
+/* Responsive admin styles */
+@media (max-width: 768px) {
+    .job-system-stats {
+        flex-direction: column;
+    }
+    
+    .job-system-stat {
+        min-width: auto;
+    }
+    
+    .job-applications-table {
+        font-size: 14px;
+    }
+    
+    .job-applications-table th,
+    .job-applications-table td {
+        padding: 8px;
+    }
+}
