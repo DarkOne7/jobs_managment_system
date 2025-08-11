@@ -217,9 +217,9 @@ This project is licensed under the GPL v2 or later - see the [LICENSE](LICENSE) 
 
 ## 🆘 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/job-system/issues)
-- **Documentation**: [Wiki](https://github.com/yourusername/job-system/wiki)
-- **Email**: your-email@example.com
+- **Issues**: [GitHub Issues](https://github.com/DarkOne7/jobs_managment_system/issues)
+- **Documentation**: [Wiki](https://github.com/DarkOne7/jobs_managment_system/wiki)
+- **Email**: your-adhamshawki@outlook.com
 
 ## 🙏 Acknowledgments
 
@@ -231,3 +231,4 @@ This project is licensed under the GPL v2 or later - see the [LICENSE](LICENSE) 
 ---
 
 **Made with ❤️ for the WordPress community**
+
