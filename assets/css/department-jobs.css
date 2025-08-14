@@ -1,0 +1,251 @@
+/* CSS خاص بصفحة وظائف القسم */
+.job-system-container {
+    padding: 0;
+    margin: 0;
+}
+
+.job-system-header {
+    color: white;
+    padding: 40px 0 60px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.breadcrumb {
+    margin-bottom: 30px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.breadcrumb a {
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    opacity: 0.8;
+}
+
+.separator {
+    margin: 0 10px;
+}
+
+.department-header-content {
+    text-align: center;
+}
+
+.department-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.department-description {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    opacity: 0.9;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.jobs-count-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.jobs-listing {
+    padding: 60px 0;
+}
+
+.jobs-grid {
+    display: grid;
+    gap: 30px;
+}
+
+.job-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    padding: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 4px solid #007cba;
+}
+
+.job-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    gap: 20px;
+}
+
+.job-title {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    flex: 1;
+}
+
+.job-title a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.job-title a:hover {
+    color: #007cba;
+}
+
+.job-department-badge {
+    background-color: #007cba;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.job-excerpt {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.job-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.meta-item i {
+    color: #007cba;
+    width: 16px;
+}
+
+.job-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007cba;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #005a87;
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background: transparent;
+    color: #007cba;
+    border: 2px solid #007cba;
+}
+
+.btn-outline:hover {
+    background: #007cba;
+    color: white;
+}
+
+.job-date {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.no-jobs {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.no-content-message {
+    color: #666;
+}
+
+.no-content-message i {
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.no-content-message h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .job-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .job-department-badge {
+        align-self: flex-start;
+    }
+    
+    .job-meta {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .job-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .job-date {
+        text-align: center;
+    }
+}
+
