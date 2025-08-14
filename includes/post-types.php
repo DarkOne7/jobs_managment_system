@@ -1,6 +1,6 @@
 <?php
 /**
- * ملف إدارة Custom Post Types
+ * Custom Post Types Management File
  */
 
 if (!defined('ABSPATH')) {
@@ -18,21 +18,21 @@ class JobSystemPostTypes {
     }
     
     public function register_post_types() {
-        // تسجيل post type للأقسام مع المزيد من التفاصيل
+        // Register post type for departments with more details
         register_post_type('job_department', array(
             'labels' => array(
-                'name' => __('أقسام الوظائف', 'job-system'),
-                'singular_name' => __('قسم وظائف', 'job-system'),
-                'add_new' => __('إضافة قسم جديد', 'job-system'),
-                'add_new_item' => __('إضافة قسم وظائف جديد', 'job-system'),
-                'edit_item' => __('تعديل قسم الوظائف', 'job-system'),
-                'new_item' => __('قسم وظائف جديد', 'job-system'),
-                'all_items' => __('جميع أقسام الوظائف', 'job-system'),
-                'view_item' => __('عرض قسم الوظائف', 'job-system'),
-                'search_items' => __('البحث في أقسام الوظائف', 'job-system'),
-                'not_found' => __('لم يتم العثور على أقسام وظائف', 'job-system'),
-                'not_found_in_trash' => __('لم يتم العثور على أقسام وظائف في المهملات', 'job-system'),
-                'menu_name' => __('أقسام الوظائف', 'job-system')
+                'name' => __('Job Departments', 'job-system'),
+                'singular_name' => __('Job Department', 'job-system'),
+                'add_new' => __('Add New Department', 'job-system'),
+                'add_new_item' => __('Add New Job Department', 'job-system'),
+                'edit_item' => __('Edit Job Department', 'job-system'),
+                'new_item' => __('New Job Department', 'job-system'),
+                'all_items' => __('All Job Departments', 'job-system'),
+                'view_item' => __('View Job Department', 'job-system'),
+                'search_items' => __('Search Job Departments', 'job-system'),
+                'not_found' => __('No job departments found', 'job-system'),
+                'not_found_in_trash' => __('No job departments found in trash', 'job-system'),
+                'menu_name' => __('Job Departments', 'job-system')
             ),
             'public' => true,
             'publicly_queryable' => true,
@@ -49,21 +49,21 @@ class JobSystemPostTypes {
             'show_in_rest' => true,
         ));
         
-        // تسجيل post type للوظائف مع المزيد من التفاصيل
+        // Register post type for jobs with more details
         register_post_type('job', array(
             'labels' => array(
-                'name' => __('الوظائف', 'job-system'),
-                'singular_name' => __('وظيفة', 'job-system'),
-                'add_new' => __('إضافة وظيفة جديدة', 'job-system'),
-                'add_new_item' => __('إضافة وظيفة جديدة', 'job-system'),
-                'edit_item' => __('تعديل الوظيفة', 'job-system'),
-                'new_item' => __('وظيفة جديدة', 'job-system'),
-                'all_items' => __('جميع الوظائف', 'job-system'),
-                'view_item' => __('عرض الوظيفة', 'job-system'),
-                'search_items' => __('البحث في الوظائف', 'job-system'),
-                'not_found' => __('لم يتم العثور على وظائف', 'job-system'),
-                'not_found_in_trash' => __('لم يتم العثور على وظائف في المهملات', 'job-system'),
-                'menu_name' => __('الوظائف', 'job-system')
+                'name' => __('Jobs', 'job-system'),
+                'singular_name' => __('Job', 'job-system'),
+                'add_new' => __('Add New Job', 'job-system'),
+                'add_new_item' => __('Add New Job', 'job-system'),
+                'edit_item' => __('Edit Job', 'job-system'),
+                'new_item' => __('New Job', 'job-system'),
+                'all_items' => __('All Jobs', 'job-system'),
+                'view_item' => __('View Job', 'job-system'),
+                'search_items' => __('Search Jobs', 'job-system'),
+                'not_found' => __('No jobs found', 'job-system'),
+                'not_found_in_trash' => __('No jobs found in trash', 'job-system'),
+                'menu_name' => __('Jobs', 'job-system')
             ),
             'public' => true,
             'publicly_queryable' => true,
@@ -81,21 +81,21 @@ class JobSystemPostTypes {
         ));
     }
     
-    // إضافة أعمدة مخصصة لجدول الوظائف في الـ admin
+    // Add custom columns to jobs table in admin
     public function add_job_columns($columns) {
         $new_columns = array();
         $new_columns['cb'] = $columns['cb'];
         $new_columns['title'] = $columns['title'];
-        $new_columns['job_department'] = __('القسم', 'job-system');
-        $new_columns['job_location'] = __('الموقع', 'job-system');
-        $new_columns['job_type'] = __('نوع الوظيفة', 'job-system');
-        $new_columns['job_salary'] = __('الراتب', 'job-system');
+        $new_columns['job_department'] = __('Department', 'job-system');
+        $new_columns['job_location'] = __('Location', 'job-system');
+        $new_columns['job_type'] = __('Job Type', 'job-system');
+        $new_columns['job_salary'] = __('Salary', 'job-system');
         $new_columns['date'] = $columns['date'];
         
         return $new_columns;
     }
     
-    // عرض محتوى الأعمدة المخصصة للوظائف
+    // Display custom column content for jobs
     public function job_custom_column($column, $post_id) {
         switch ($column) {
             case 'job_department':
@@ -108,44 +108,44 @@ class JobSystemPostTypes {
                         echo '</a>';
                     }
                 } else {
-                    echo '<span style="color: #999;">غير محدد</span>';
+                    echo '<span style="color: #999;">Not specified</span>';
                 }
                 break;
             case 'job_location':
                 $location = get_post_meta($post_id, '_job_location', true);
-                echo $location ? esc_html($location) : '<span style="color: #999;">غير محدد</span>';
+                echo $location ? esc_html($location) : '<span style="color: #999;">Not specified</span>';
                 break;
             case 'job_type':
                 $type = get_post_meta($post_id, '_job_type', true);
                 $types = array(
-                    'full-time' => 'دوام كامل',
-                    'part-time' => 'دوام جزئي',
-                    'contract' => 'عقد',
-                    'freelance' => 'عمل حر'
+                    'full-time' => 'Full Time',
+                    'part-time' => 'Part Time',
+                    'contract' => 'Contract',
+                    'freelance' => 'Freelance'
                 );
-                echo isset($types[$type]) ? $types[$type] : '<span style="color: #999;">غير محدد</span>';
+                echo isset($types[$type]) ? $types[$type] : '<span style="color: #999;">Not specified</span>';
                 break;
             case 'job_salary':
                 $salary = get_post_meta($post_id, '_job_salary', true);
-                echo $salary ? esc_html($salary) : '<span style="color: #999;">غير محدد</span>';
+                echo $salary ? esc_html($salary) : '<span style="color: #999;">Not specified</span>';
                 break;
         }
     }
     
-    // إضافة أعمدة مخصصة لجدول الأقسام في الـ admin
+    // Add custom columns to departments table in admin
     public function add_department_columns($columns) {
         $new_columns = array();
         $new_columns['cb'] = $columns['cb'];
         $new_columns['title'] = $columns['title'];
-        $new_columns['department_icon'] = __('الأيقونة', 'job-system');
-        $new_columns['department_color'] = __('اللون', 'job-system');
-        $new_columns['jobs_count'] = __('عدد الوظائف', 'job-system');
+        $new_columns['department_icon'] = __('Icon', 'job-system');
+        $new_columns['department_color'] = __('Color', 'job-system');
+        $new_columns['jobs_count'] = __('Jobs Count', 'job-system');
         $new_columns['date'] = $columns['date'];
         
         return $new_columns;
     }
     
-    // عرض محتوى الأعمدة المخصصة للأقسام
+    // Display custom column content for departments
     public function department_custom_column($column, $post_id) {
         switch ($column) {
             case 'department_icon':
@@ -153,7 +153,7 @@ class JobSystemPostTypes {
                 if ($icon) {
                     echo '<i class="' . esc_attr($icon) . '" style="font-size: 20px;"></i> ' . esc_html($icon);
                 } else {
-                    echo '<span style="color: #999;">غير محدد</span>';
+                    echo '<span style="color: #999;">Not specified</span>';
                 }
                 break;
             case 'department_color':
@@ -162,7 +162,7 @@ class JobSystemPostTypes {
                     echo '<div style="width: 30px; height: 20px; background-color: ' . esc_attr($color) . '; border: 1px solid #ddd; display: inline-block; margin-right: 10px;"></div>';
                     echo esc_html($color);
                 } else {
-                    echo '<span style="color: #999;">غير محدد</span>';
+                    echo '<span style="color: #999;">Not specified</span>';
                 }
                 break;
             case 'jobs_count':
@@ -178,12 +178,12 @@ class JobSystemPostTypes {
                     'numberposts' => -1
                 ));
                 $count = count($jobs);
-                echo '<strong>' . $count . '</strong> وظيفة';
+                echo '<strong>' . $count . '</strong> jobs';
                 break;
         }
     }
     
-    // دالة مساعدة للحصول على جميع الوظائف في قسم معين
+    // Helper function to get all jobs in a specific department
     public static function get_jobs_by_department($department_id) {
         return get_posts(array(
             'post_type' => 'job',
@@ -199,7 +199,7 @@ class JobSystemPostTypes {
         ));
     }
     
-    // دالة مساعدة للحصول على جميع الأقسام
+    // Helper function to get all departments
     public static function get_all_departments() {
         return get_posts(array(
             'post_type' => 'job_department',
@@ -211,5 +211,5 @@ class JobSystemPostTypes {
     }
 }
 
-// تشغيل كلاس Post Types
+// Initialize Post Types class
 new JobSystemPostTypes();
