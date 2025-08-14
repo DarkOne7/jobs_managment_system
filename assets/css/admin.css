@@ -1,0 +1,440 @@
+/**
+ * Job Management System - Admin Styles
+ */
+
+/* Dashboard Styles */
+.jms-dashboard {
+    max-width: 1200px;
+}
+
+.jms-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.jms-stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-left: 4px solid #007cba;
+}
+
+.jms-stat-icon {
+    font-size: 2rem;
+    color: #007cba;
+    opacity: 0.8;
+}
+
+.jms-stat-content h3 {
+    font-size: 2rem;
+    margin: 0;
+    color: #333;
+    font-weight: 600;
+}
+
+.jms-stat-content p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.jms-stat-link {
+    color: #007cba;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.jms-stat-link:hover {
+    text-decoration: underline;
+}
+
+.jms-quick-actions {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.jms-quick-actions h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.jms-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.jms-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 15px;
+    background: #007cba;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.jms-action-btn:hover {
+    background: #005a87;
+    color: white;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.jms-recent-applications {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.jms-recent-applications h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Status badges */
+.jms-status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.jms-status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.jms-status-approved {
+    background: #d4edda;
+    color: #155724;
+}
+
+.jms-status-rejected {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.jms-status-shortlisted {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.jms-view-all {
+    text-align: right;
+    margin-top: 15px;
+}
+
+.jms-view-all a {
+    color: #007cba;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.jms-view-all a:hover {
+    text-decoration: underline;
+}
+
+/* Departments List Styles */
+.column-icon {
+    width: 60px;
+    text-align: center;
+}
+
+.column-color {
+    width: 100px;
+}
+
+.column-jobs {
+    width: 80px;
+}
+
+.column-date {
+    width: 100px;
+}
+
+.column-actions {
+    width: 120px;
+}
+
+.color-preview {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    border: 1px solid #ddd;
+}
+
+.description {
+    color: #666;
+    font-style: italic;
+}
+
+.jms-empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.jms-empty-icon {
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.jms-empty-state h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.jms-empty-state p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+.jms-form .form-table {
+    max-width: 800px;
+}
+
+.color-picker {
+    width: 60px;
+    height: 40px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.icon-selector {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.icon-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    background: #f9f9f9;
+}
+
+.icon-preview i {
+    font-size: 1.5rem;
+}
+
+.icon-suggestions {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+.icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: 8px;
+    max-width: 400px;
+}
+
+.icon-option {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #ddd;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.icon-option:hover {
+    border-color: #007cba;
+    background: #f0f8ff;
+}
+
+.icon-option.selected {
+    border-color: #007cba;
+    background: #007cba;
+    color: white;
+}
+
+.icon-option i {
+    font-size: 1.2rem;
+}
+
+.icon-option.selected i {
+    color: white;
+}
+
+/* Table Enhancements */
+.wp-list-table .column-icon {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.wp-list-table .column-color {
+    vertical-align: middle;
+}
+
+/* Responsive Design */
+@media (max-width: 782px) {
+    .jms-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .jms-stat-card {
+        padding: 15px;
+    }
+    
+    .jms-actions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .icon-grid {
+        max-width: none;
+    }
+    
+    .icon-selector {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+/* Error and Success Messages */
+.notice {
+    margin: 5px 0 15px;
+}
+
+.notice.is-dismissible {
+    padding-right: 38px;
+}
+
+/* Loading States */
+.jms-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #007cba;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Button Enhancements */
+.button.button-primary {
+    background: #007cba;
+    border-color: #005a87;
+    text-shadow: none;
+    box-shadow: 0 1px 0 #005a87;
+}
+
+.button.button-primary:hover {
+    background: #005a87;
+    border-color: #004063;
+}
+
+.button.button-primary:focus {
+    background: #005a87;
+    border-color: #004063;
+    box-shadow: 0 0 0 1px #005a87;
+}
+
+/* Card Hover Effects */
+.jms-stat-card,
+.jms-action-btn {
+    transition: all 0.3s ease;
+}
+
+.jms-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Form Validation */
+.form-field-error {
+    border-color: #dc3232 !important;
+    box-shadow: 0 0 2px rgba(220, 50, 50, 0.5);
+}
+
+.field-error-message {
+    color: #dc3232;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Data Table Enhancements */
+.wp-list-table th {
+    background: #f9f9f9;
+    border-bottom: 2px solid #007cba;
+}
+
+.wp-list-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.wp-list-table .row-actions {
+    visibility: visible;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.wp-list-table tbody tr:hover .row-actions {
+    opacity: 1;
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-muted {
+    color: #666;
+}
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: 10px; }
+.mt-2 { margin-top: 20px; }
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: 10px; }
+.mb-2 { margin-bottom: 20px; }
+

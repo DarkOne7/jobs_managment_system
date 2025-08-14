@@ -1,0 +1,315 @@
+/* CSS خاص بصفحة الوظيفة الواحدة */
+.job-system-container {
+    padding: 0;
+    margin: 0;
+}
+
+.job-system-header {
+    color: white;
+    padding: 40px 0 60px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.breadcrumb {
+    margin-bottom: 30px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.breadcrumb a {
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    opacity: 0.8;
+}
+
+.separator {
+    margin: 0 10px;
+}
+
+.job-header-content {
+    text-align: center;
+}
+
+.job-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.page-title {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.job-summary {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    opacity: 0.9;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.job-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+    margin: 5px;
+}
+
+.job-content {
+    padding: 60px 0;
+}
+
+.job-details-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.job-main-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.content-section {
+    padding: 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.content-section:last-child {
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+    border-bottom: 2px solid #007cba;
+    padding-bottom: 10px;
+}
+
+.job-description {
+    color: #666;
+    line-height: 1.7;
+    font-size: 1.1rem;
+}
+
+.requirements-list,
+.benefits-list {
+    list-style: none;
+    padding: 0;
+}
+
+.requirements-list li,
+.benefits-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    position: relative;
+    padding-left: 25px;
+}
+
+.requirements-list li:before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #28a745;
+    font-weight: bold;
+}
+
+.benefits-list li:before {
+    content: '★';
+    position: absolute;
+    left: 0;
+    color: #ffc107;
+}
+
+.job-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.info-card,
+.apply-card,
+.share-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    padding: 25px;
+}
+
+.card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.label {
+    font-weight: 500;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.label i {
+    color: #007cba;
+    width: 16px;
+}
+
+.value {
+    font-weight: 600;
+    color: #333;
+}
+
+.btn-apply {
+    width: 100%;
+    background: #28a745;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.btn-apply:hover {
+    background: #218838;
+    transform: translateY(-2px);
+}
+
+.application-note {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    color: #666;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.share-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: opacity 0.3s ease;
+}
+
+.share-btn:hover {
+    opacity: 0.8;
+}
+
+.share-facebook {
+    background: #3b5998;
+}
+
+.share-twitter {
+    background: #1da1f2;
+}
+
+.share-linkedin {
+    background: #0077b5;
+}
+
+.share-whatsapp {
+    background: #25d366;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #007cba;
+    text-decoration: none;
+    margin-bottom: 20px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: #005a87;
+    text-decoration: underline;
+}
+
+.department-badge {
+    background: #007cba;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .job-details-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .content-section {
+        padding: 20px;
+    }
+    
+    .info-card,
+    .apply-card,
+    .share-card {
+        padding: 20px;
+    }
+    
+    .info-item {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .value {
+        text-align: right;
+    }
+}
+
