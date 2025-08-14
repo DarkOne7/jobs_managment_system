@@ -1,88 +1,88 @@
 <?php
 /**
- * ملف اختبار Job System Plugin
- * ارفعه لمجلد الموقع الرئيسي لاختبار الـ plugin
+ * Job System Plugin Test File
+ * Upload this file to the main site directory to test the plugin
  */
 
-// التأكد من المسار
+// Check the path
 if (!file_exists('wp-config.php')) {
-    die('يرجى رفع هذا الملف في نفس مجلد wp-config.php');
+    die('Please upload this file in the same directory as wp-config.php');
 }
 
-// تحميل WordPress
+// Load WordPress
 require_once('wp-config.php');
 require_once('wp-load.php');
 
-// معالجة الطلبات
+// Handle requests
 if (isset($_POST['flush_rules'])) {
     flush_rewrite_rules();
     echo '<div style="background: #d4edda; padding: 15px; margin: 20px 0; border-radius: 5px;">';
-    echo '<strong>تم إعادة تحديث Rewrite Rules!</strong><br>';
+    echo '<strong>Rewrite Rules have been updated!</strong><br>';
     echo '</div>';
 }
 
 if (isset($_POST['force_refresh'])) {
-    // إعادة تفعيل الـ plugin
+    // Reactivate the plugin
     if (is_plugin_active('job-system/job-system.php')) {
         deactivate_plugins('job-system/job-system.php');
         activate_plugin('job-system/job-system.php');
         echo '<div style="background: #d4edda; padding: 15px; margin: 20px 0; border-radius: 5px;">';
-        echo '<strong>تم إعادة تفعيل Plugin!</strong><br>';
+        echo '<strong>Plugin has been reactivated!</strong><br>';
         echo '</div>';
     }
 }
 
-echo '<h2>اختبار Job System Plugin</h2>';
+echo '<h2>Job System Plugin Test</h2>';
 
-// التحقق من وجود الـ plugin
+// Check if the plugin exists
 $plugin_file = 'wp-content/plugins/job-system/job-system.php';
 if (file_exists($plugin_file)) {
-    echo '<p style="color: green;">✅ ملف الـ plugin موجود</p>';
+    echo '<p style="color: green;">✅ Plugin file exists</p>';
 } else {
-    echo '<p style="color: red;">❌ ملف الـ plugin غير موجود</p>';
+    echo '<p style="color: red;">❌ Plugin file does not exist</p>';
     exit;
 }
 
-// التحقق من تفعيل الـ plugin
+// Check if the plugin is active
 if (is_plugin_active('job-system/job-system.php')) {
-    echo '<p style="color: green;">✅ الـ plugin مفعّل</p>';
+    echo '<p style="color: green;">✅ Plugin is active</p>';
 } else {
-    echo '<p style="color: orange;">⚠️ الـ plugin غير مفعّل</p>';
+    echo '<p style="color: orange;">⚠️ Plugin is not active</p>';
 }
 
-// التحقق من Post Types
+// Check Post Types
 $post_types = get_post_types();
 if (isset($post_types['job']) && isset($post_types['job_department'])) {
-    echo '<p style="color: green;">✅ Post Types مسجلة بنجاح</p>';
+    echo '<p style="color: green;">✅ Post Types registered successfully</p>';
 } else {
-    echo '<p style="color: red;">❌ Post Types غير مسجلة</p>';
+    echo '<p style="color: red;">❌ Post Types not registered</p>';
 }
 
-// التحقق من الـ templates
+// Check templates
 $templates = array(
     'departments-archive.php',
     'department-jobs.php', 
     'single-job.php'
 );
 
-echo '<h3>ملفات Templates:</h3>';
+echo '<h3>Template Files:</h3>';
 foreach ($templates as $template) {
     $template_path = 'wp-content/plugins/job-system/templates/' . $template;
     if (file_exists($template_path)) {
-        echo '<p style="color: green;">✅ ' . $template . ' موجود</p>';
+        echo '<p style="color: green;">✅ ' . $template . ' exists</p>';
     } else {
-        echo '<p style="color: red;">❌ ' . $template . ' غير موجود</p>';
+        echo '<p style="color: red;">❌ ' . $template . ' does not exist</p>';
     }
 }
 
-// اختبار الـ rewrite rules
-echo '<h3>اختبار الروابط:</h3>';
+// Test rewrite rules
+echo '<h3>Link Test:</h3>';
 echo '<ul>';
-echo '<li><a href="/jobs/" target="_blank">صفحة الأقسام (/jobs/)</a></li>';
-echo '<li><a href="/jobs/department?id=1" target="_blank">وظائف قسم (إذا كان موجود)</a></li>';
+echo '<li><a href="/jobs/" target="_blank">Departments Page (/jobs/)</a></li>';
+echo '<li><a href="/jobs/department?id=1" target="_blank">Department Jobs (if exists)</a></li>';
 echo '</ul>';
 
-// اختبار rewrite rules
+// Test rewrite rules
 $rules = get_option('rewrite_rules');
 $job_rules_found = false;
 if (is_array($rules)) {
@@ -95,45 +95,45 @@ if (is_array($rules)) {
 }
 
 if (!$job_rules_found) {
-    echo '<p style="color: red;">❌ لم يتم العثور على rewrite rules للوظائف</p>';
+    echo '<p style="color: red;">❌ No rewrite rules found for jobs</p>';
     echo '<form method="post">';
     echo '<input type="hidden" name="flush_rules" value="1">';
-    echo '<button type="submit" style="background: #007cba; color: white; padding: 10px 20px; border: none; border-radius: 5px;">إعادة تحديث Rewrite Rules</button>';
+    echo '<button type="submit" style="background: #007cba; color: white; padding: 10px 20px; border: none; border-radius: 5px;">Update Rewrite Rules</button>';
     echo '</form>';
 }
 
-// إحصائيات
+// Statistics
 $departments = get_posts(array('post_type' => 'job_department', 'numberposts' => -1));
 $jobs = get_posts(array('post_type' => 'job', 'numberposts' => -1));
 
-echo '<h3>الإحصائيات:</h3>';
-echo '<p>عدد الأقسام: <strong>' . count($departments) . '</strong></p>';
-echo '<p>عدد الوظائف: <strong>' . count($jobs) . '</strong></p>';
+echo '<h3>Statistics:</h3>';
+echo '<p>Number of Departments: <strong>' . count($departments) . '</strong></p>';
+echo '<p>Number of Jobs: <strong>' . count($jobs) . '</strong></p>';
 
-// أزرار التحكم
-echo '<h3>أدوات الإصلاح:</h3>';
+// Control buttons
+echo '<h3>Repair Tools:</h3>';
 echo '<div style="display: flex; gap: 10px; margin-bottom: 20px;">';
 echo '<form method="post" style="display: inline;">';
 echo '<input type="hidden" name="force_refresh" value="1">';
-echo '<button type="submit" style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">إعادة تفعيل Plugin</button>';
+echo '<button type="submit" style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Reactivate Plugin</button>';
 echo '</form>';
 
 echo '<form method="post" style="display: inline;">';
 echo '<input type="hidden" name="flush_rules" value="1">';
-echo '<button type="submit" style="background: #007cba; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">إعادة تحديث Rules</button>';
+echo '<button type="submit" style="background: #007cba; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Update Rules</button>';
 echo '</form>';
 echo '</div>';
 
-// زر حذف الملف
-echo '<h3>تنظيف:</h3>';
+// Delete file button
+echo '<h3>Cleanup:</h3>';
 echo '<form method="post">';
 echo '<input type="hidden" name="delete_test_file" value="1">';
-echo '<button type="submit" style="background: #dc3545; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">حذف ملف الاختبار</button>';
+echo '<button type="submit" style="background: #dc3545; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Delete Test File</button>';
 echo '</form>';
 
 if (isset($_POST['delete_test_file'])) {
     unlink(__FILE__);
-    echo '<p style="color: green;">تم حذف ملف الاختبار!</p>';
+    echo '<p style="color: green;">Test file has been deleted!</p>';
     echo '<script>setTimeout(function(){ window.location.href = "/wp-admin/"; }, 2000);</script>';
 }
 ?>
