@@ -1,540 +1,442 @@
 <?php
 /**
- * Template for displaying jobs by department (Desktop - 8.jpg style)
- * This template shows jobs for a specific department
+ * Template for displaying jobs in a specific department
+ * URL: /jobs/department/{department_slug}
  */
 
-if (!defined('ABSPATH')) {
-    exit;
-}
-
-// Get department from query var (set by our custom routing)
-$department = get_query_var('current_department');
+global $jms_data;
+$department = $jms_data['department'] ?? null;
+$jobs = $jms_data['jobs'] ?? array();
+$page_title = $jms_data['page_title'] ?? 'Jobs';
+$page_description = $jms_data['page_description'] ?? '';
 
 if (!$department) {
-    // Fallback: try to get from URL parameter
-    $department_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-    if ($department_id) {
-        $department = get_term($department_id, 'job_department');
-    }
-}
-
-if (!$department || is_wp_error($department)) {
-    wp_redirect(home_url('/jobs'));
+    wp_redirect(home_url('/jobs/'));
     exit;
 }
 
-// Debug: Show what department we're working with
-if (isset($_GET['debug'])) {
-    echo "<h3>Debug Info:</h3>";
-    echo "Department ID: " . $department->term_id . "<br>";
-    echo "Department Name: " . $department->name . "<br>";
-    echo "Department Slug: " . $department->slug . "<br>";
-}
+$department_color = JMS_Templates::get_department_color($department->color);
+$department_icon = JMS_Templates::get_department_icon($department->icon);
 
-$department_color = get_term_meta($department->term_id, 'department_color', true);
-if (!$department_color) {
-    $department_color = '#10b981';
-}
-
-// Get jobs for this department - simplified query first
-$jobs_query = new WP_Query(array(
-    'post_type' => 'job',
-    'posts_per_page' => -1,
-    'post_status' => 'publish',
-    'tax_query' => array(
-        array(
-            'taxonomy' => 'job_department',
-            'field' => 'term_id',
-            'terms' => $department->term_id
-        )
-    )
-));
-
-// Debug: Show query results
-if (isset($_GET['debug'])) {
-    echo "Jobs found: " . $jobs_query->found_posts . "<br>";
-    echo "SQL Query: " . $jobs_query->request . "<br><br>";
-}
-?>
-
-<div class="Header">
-        <h1><?php echo esc_html($department->name); ?></h1>
-    </div>
-
-<div class="department-jobs-page">
-    <!-- Header Section -->
-
-<!--     <div class="department-header" style="background: linear-gradient(135deg, <?php echo esc_attr($department_color); ?>15 0%, <?php echo esc_attr($department_color); ?>05 100%);">
-        <div class="header-content">
-            <div class="back-navigation">
-                <a href="<?php echo esc_url( home_url('/jobs') ); ?>" class="back-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <?php _e('Back to all departments', 'job-system'); ?>
-                </a>
-            </div>
-            
-            <div class="department-info">
-                <div class="logo-placeholder" style="background-color: <?php echo esc_attr($department_color); ?>;">
-                    <?php echo esc_html(strtoupper(substr($department->name, 0, 2))); ?>
-                </div>
-                <h1 class="department-title"><?php echo esc_html($department->name); ?></h1>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- Jobs Grid -->
-    <div class="jobs-container">
-        <?php if ($jobs_query->have_posts()): ?>
-            <div class="jobs-grid">
-                <?php while ($jobs_query->have_posts()): $jobs_query->the_post(); ?>
-                    <?php
-                    $job_id = get_the_ID();
-                    $location = get_post_meta($job_id, '_job_location', true);
-                    $work_type = get_post_meta($job_id, '_work_type', true);
-                    $deadline = get_post_meta($job_id, '_application_deadline', true);
-                    $is_expired = $deadline && time() > strtotime($deadline);
-                    ?>
-                    
-                    <div class="card" data-job-id="<?php echo esc_attr($job_id); ?>">
-                        <div class="card-top">
-                            <div class="vertical-bar" style="background-color: <?php echo esc_attr($department_color); ?>;"></div>
-                            <div class="text-content">
-                                <p class="team-label"><?php echo esc_html($department->name); ?></p>
-                                <h2 class="product-title"><?php echo get_the_title($job_id); ?></h2>
-                            </div>
-                        </div>
-
-                        <div class="card-bottom">
-                            <p class="opportunities-count"><?php echo wp_trim_words(get_the_excerpt($job_id), 15, '...'); ?></p>
-                            <?php if (!$is_expired): ?>
-                                <a href="<?php echo get_permalink($job_id); ?>" class="see-all-btn">Know more</a>
-                            <?php else: ?>
-                                <span class="expired-label">Application Closed</span>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                    
-                <?php endwhile; ?>
-            </div>
-            <?php wp_reset_postdata(); ?>
-        <?php else: ?>
-            <div class="no-jobs">
-                <div class="no-jobs-content">
-                    <div class="no-jobs-icon">
-                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20 6h-2V4c0-1.11-.89-2-2-2H8c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zM8 4h8v2H8V4z" fill="currentColor"/>
-                        </svg>
-                    </div>
-                    <h3><?php _e('No open positions', 'job-system'); ?></h3>
-                    <p><?php printf(__('There are currently no open positions in %s department.', 'job-system'), esc_html($department->name)); ?></p>
-                    <a href="<?php echo esc_url( home_url('/jobs') ); ?>" class="back-to-departments">
-                        <?php _e('View all departments', 'job-system'); ?>
-                    </a>
-                </div>
-            </div>
-        <?php endif; ?>
-    </div>
-</div>
+get_header(); ?>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-.Header {
-    font-family: "Poppins";
-    background: black;
-    color: white;
-    padding: 48px 104px;
-    text-align: center;
-    border-bottom: solid 3px #14A26A;
-    margin-bottom: 30px;
-}
 /* Department Jobs Page Styles */
-.department-jobs-page {
+.job-system-container {
+    padding: 0;
+    margin: 0;
+}
+
+.jms-header {
+    color: white;
+    padding: 100px 0;
+}
+
+.container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
-    font-family: 'Poppins', sans-serif;
 }
 
-.jobs-container {
-    padding: 20px 0;
+
+
+
+
+.separator {
+    margin: 0 10px;
 }
 
-/* .department-header {
-    
-    padding: 40px;
-    border-radius: 16px;
-    margin-bottom: 40px;
+.department-header-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.back-navigation {
-    margin-bottom: 24px;
-}
-
-.back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #6b7280;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.back-link:hover {
-    color: #374151;
-    text-decoration: none;
-}
-
-.department-info {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.logo-placeholder {
-    width: 80px;
-    height: 80px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.page-title {
     color: white;
-    font-size: 24px;
+    font-size: 3.5rem;
+    margin-bottom: 20px;
     font-weight: 700;
-    flex-shrink: 0;
+    text-align: center;
 }
 
-.department-title {
-    font-size: 3rem;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin: 0;
-    line-height: 1.1;
+.department-description {
+    font-size: 18px;
+    margin-bottom: 25px;
+    opacity: 0.9;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.jobs-count-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.jobs-listing {
+    padding: 0;
+}
+
+.jobs-filter {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.filter-options label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.filter-options select {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    background: white;
+    width: 200px;
+    max-width: 100%;
 }
 
 .jobs-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 60px 0;
     align-items: stretch;
 }
- */
 
-/* Jobs Grid Layout */
-.jobs-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 4 columns on desktop */
-    gap: 24px;
-    align-items: stretch;
-    padding: 20px 0;
-}
-
-/* --- Card Styling --- */
-.card {
-    background-color: #ffffff;
-    border-radius: 16px; /* More rounded corners */
-    border: solid 1px #e5e7eb;
+.job-card {
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: white;
+    border-radius: 12px;
     padding: 24px;
     width: 100%;
+    border: 1px solid #DFDFDF;
+    position: relative;
+    transition: all 0.2s ease;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Pushes content and button apart */
-    min-height: 200px; /* Gives the card a fixed height */
-    box-sizing: border-box; /* Ensures padding is included in the width/height */
+    min-height: 250px;
 }
 
-.card-top {
-    display: flex;
-    align-items: flex-start; /* Align items to the top */
-    gap: 16px; /* Space between the green bar and the text */
+.job-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
 }
 
-.vertical-bar {
-    width: 5px;
-    height: 50px; /* Height of the bar */
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
+.job-card-color {
+    border-left: 4px solid #0284c7;
+    border-radius: 4px;
+    padding-left: 18px;
+    text-align: left;
+    margin-bottom: 16px;
 }
 
-.text-content {
-    display: flex;
-    flex-direction: column;
-}
-
-.team-label {
-    color: #8A94A6; /* Gray color for "Team" */
-    font-size: 15px;
+.job-label {
+    color: #868686;
+    font-size: 14px;
     font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.job-card-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #000000;
     margin: 0;
     line-height: 1.2;
 }
 
-.product-title {
-    color: #000000; /* Black color for "Product" */
-    font-size: 26px;
-    font-weight: 600; /* Bolder */
-    margin: 0;
-    line-height: 1.4;
+.job-card-title a {
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-.card-bottom {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Space between opportunities text and button */
+.job-card-title a:hover {
+    color: #007cba;
 }
 
-.opportunities-count {
-    color: #333;
-    font-size: 16px;
+.job-location-info {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 24px;
     font-weight: 500;
-    margin: 0;
 }
 
-/* --- Button Styling --- */
-.see-all-btn {
-    display: block;
+.job-see-all-btn {
+    width: 100%;
+    background: transparent;
+    border: 2px solid #14A26A;
+    color: #14A26A;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
     text-align: center;
-    background-color: #ffffff;
-    color: #10b981; /* Green color for departments */
-    border: 1.5px solid #10b981; /* Green border */
-    padding: 12px 0;
-    border-radius: 12px; /* More rounded button corners */
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 16px;
-    transition: background-color 0.2s, color 0.2s;
+    display: block;
+    margin-top: auto;
 }
 
-.see-all-btn:hover {
-    background-color: #10b981;
-    color: #ffffff;
+.job-see-all-btn:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+    color: #374151;
     text-decoration: none;
 }
 
-.job-department-tag {
-    display: inline-block;
+.job-see-all-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: #3b82f6;
+}
+
+.job-see-all-btn:active {
+    transform: translateY(1px);
+}
+
+.job-department-badge {
+    background-color: #007cba;
+    color: white;
     padding: 6px 12px;
     border-radius: 20px;
-    color: white;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    align-self: flex-start;
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
 }
 
-.job-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin: 0;
-    line-height: 1.3;
+.job-excerpt {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
 }
 
 .job-meta {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
 }
 
-.job-location,
-.job-type {
+.meta-item {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #6b7280;
-    font-size: 14px;
+    color: #666;
+    font-size: 0.9rem;
 }
 
-.job-excerpt {
-    color: #6b7280;
-    line-height: 1.6;
-    font-size: 14px;
+.meta-item i {
+    color: #007cba;
+    width: 16px;
 }
 
-.apply-button {
-    background: #1a1a1a;
-    color: white;
+.job-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
     border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 14px;
-    font-family: inherit;
 }
 
-.apply-button:hover {
-    background: #374151;
-    transform: translateY(-1px);
-}
-
-.see-all-btn {
-    background: transparent;
-    color: #10b981;
-    border: 1px solid #10b981;
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    display: inline-block;
-    font-family: inherit;
-}
-
-.see-all-btn:hover {
-    background: #10b981;
+.btn-primary {
+    background-color: #007cba;
     color: white;
-    text-decoration: none;
-    transform: translateY(-1px);
 }
 
-.expired-label {
-    color: #dc2626;
-    font-weight: 600;
-    font-size: 14px;
-    text-align: center;
-    padding: 12px 0;
-    border-radius: 12px;
-    border: 1.5px solid #dc2626;
-    background-color: #ffffff;
+.btn-primary:hover {
+    background-color: #005a87;
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background: transparent;
+    color: #007cba;
+    border: 2px solid #007cba;
+}
+
+.btn-outline:hover {
+    background: #007cba;
+    color: white;
+}
+
+.job-date {
+    color: #999;
+    font-size: 0.9rem;
 }
 
 .no-jobs {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 400px;
-}
-
-.no-jobs-content {
     text-align: center;
-    max-width: 400px;
+    padding: 80px 20px;
 }
 
-.no-jobs-icon {
-    color: #d1d5db;
-    margin-bottom: 24px;
-    display: flex;
-    justify-content: center;
+.no-content-message {
+    color: #666;
 }
 
-.no-jobs-content h3 {
-    font-size: 24px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin: 0 0 12px 0;
+.no-content-message i {
+    color: #ccc;
+    margin-bottom: 20px;
 }
 
-.no-jobs-content p {
-    color: #6b7280;
-    margin-bottom: 24px;
-    line-height: 1.6;
-}
-
-.back-to-departments {
-    display: inline-block;
-    background: #10b981;
-    color: white;
-    padding: 12px 24px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.back-to-departments:hover {
-    background: #059669;
-    text-decoration: none;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-    /* Tablet - 2 columns */
-    .jobs-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
+.no-content-message h3 {
+    margin-bottom: 10px;
+    color: #333;
 }
 
 @media (max-width: 768px) {
-    /* Mobile - 1 column (stacked) */
+    .jms-header {
+        padding: 60px 0;
+    }
+    
+    .page-title {
+        font-size: 2.5rem;
+    }
+    
+    .department-description {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+    
     .jobs-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
-    }
-    
-    .department-header {
-        padding: 24px 20px;
-    }
-    
-    .department-info {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-    }
-    
-    .department-title {
-        font-size: 2rem;
-    }
-    
-    .logo-placeholder {
-        width: 60px;
-        height: 60px;
-        font-size: 18px;
-    }
-    
-    .card {
-        padding: 20px;
-        min-height: 180px;
-    }
-    
-    .product-title {
-        font-size: 22px;
-    }
-    
-    .opportunities-count {
-        font-size: 14px;
+        gap: 20px;
+        padding: 40px 0;
     }
 }
 
-@media (max-width: 480px) {
-    /* Extra small phones */
+@media (max-width: 1200px) {
     .jobs-grid {
-        gap: 12px;
-        padding: 10px 0;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .jobs-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
     
-    .card {
-        padding: 16px;
-        min-height: 160px;
+    .job-card {
+        max-width: 100%;
+        margin: 0 auto;
     }
     
-    .card-top {
-        gap: 12px;
+    .job-card-title {
+        font-size: 24px;
     }
     
-    .card-bottom {
-        gap: 16px;
-    }
-    
-    .product-title {
-        font-size: 20px;
-    }
-    
-    .opportunities-count {
-        font-size: 14px;
-    }
-    
-    .see-all-btn {
-        padding: 10px 0;
-        font-size: 14px;
+    .job-see-all-btn {
+        padding: 14px 16px;
+        font-size: 16px;
     }
 }
 </style>
+
+<div class="jms-container">
+    <div class="jms-header" style="background: black;border-bottom: solid #14A26A 3px;">
+        <div class="container">
+           
+            <div class="department-header-content">
+                <h1 class="page-title"><?php echo esc_html($department->name); ?></h1>
+                
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="jobs-listing">
+            <?php if (!empty($jobs)): ?>
+                
+                
+                <div class="jobs-grid">
+                    <?php foreach ($jobs as $job): ?>
+                        <div class="job-card" data-work-type="<?php echo esc_attr($job->work_type); ?>">
+                            <div class="job-card-color" style="border-left-color: <?php echo esc_attr($department_color); ?> !important;">
+                                <div class="job-label">Position</div>
+                                <h2 class="job-card-title">
+                                    <a href="<?php echo esc_url(home_url('/jobs/' . $job->slug)); ?>">
+                                        <?php echo esc_html($job->name); ?>
+                                    </a>
+                                </h2>
+                            </div>
+                            <p class="job-location-info">
+                                <?php echo esc_html($job->location_name); ?>
+                                <?php if (!empty($job->work_type)): ?>
+                                    • <?php echo esc_html(JMS_Templates::format_work_type($job->work_type)); ?>
+                                <?php endif; ?>
+                            </p>
+                            <a href="<?php echo esc_url(home_url('/jobs/' . $job->slug)); ?>" class="job-see-all-btn">
+                                Know more
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <div class="no-jobs">
+                    <div class="no-content-message">
+                        <i class="fas fa-briefcase fa-3x"></i>
+                        <h3>No Jobs Available</h3>
+                        <p>There are currently no open positions in the <?php echo esc_html($department->name); ?> department.</p>
+                        <a href="<?php echo esc_url(home_url('/jobs/')); ?>" class="btn btn-outline">
+                            Browse Other Departments
+                        </a>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<script>
+// Simple filter functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const filter = document.getElementById('work-type-filter');
+    const jobCards = document.querySelectorAll('.job-card');
+    
+    if (filter) {
+        filter.addEventListener('change', function() {
+            const selectedType = this.value;
+            
+            jobCards.forEach(function(card) {
+                if (selectedType === '' || card.dataset.workType === selectedType) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    }
+});
+</script>
+
+<?php get_footer(); ?>
